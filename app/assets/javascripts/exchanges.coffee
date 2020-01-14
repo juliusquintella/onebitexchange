@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
-  $('#exchange_form').submit ->
+  $('.convert').change ->
     $.ajax '/convert',
       type: 'GET'
       dataType: 'json'
@@ -17,3 +17,9 @@ $(document).ready ->
       success: (data, text, jqXHR) ->
         $('#result').val(data.value)
     return false;
+  
+  $('#invert').click ->
+    target = $("#source_currency").val()
+    $("#source_currency").val($("#target_currency").val())
+    $("#target_currency").val(target)
+    $('.convert').change()
