@@ -16,7 +16,7 @@ $(document).ready ->
         alert textStatus
       success: (data, text, jqXHR) ->
         $('#result').val(data.currency[0].value * $("#amount").val())
-        $('#cotacao').text("Cotação atual da moelda em: " + new Date(data.currency[0].date).toLocaleDateString('pt-br') + " " + data.currency[0].date.substring(11) + 
+        $('#cotacao').text("Cotação atual da moeda em: " + new Date(data.currency[0].date).toLocaleDateString('pt-br') + " " + data.currency[0].date.substring(11) + 
         " => "  + data.currency[0].value)
     return false;
   
