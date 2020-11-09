@@ -15,7 +15,9 @@ $(document).ready ->
       error: (jqXHR, textStatus, errorThrown) ->
         alert textStatus
       success: (data, text, jqXHR) ->
-        $('#result').val(data.value)
+        $('#result').val(data.currency[0].value * $("#amount").val())
+        $('#cotacao').text("Cotação atual da moelda em: " + new Date(data.currency[0].date).toLocaleDateString('pt-br') + " " + data.currency[0].date.substring(11) + 
+        " => "  + data.currency[0].value)
     return false;
   
   $('#invert').click ->
