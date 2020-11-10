@@ -1,0 +1,197 @@
+***** | RAILS | *****
+* rails + "enter" lista todos as possibilidades com comandos rails
+rails
+
+* novo projeto rails 
+rails new <nome do projeto>
+
+* subir servidor de aplicacao 
+rails server 
+sobre o projeto na porta 3001
+rails s -p 3001
+
+* criar projeto ja setando o BS (config/database.yml)
+rails new meu_app --database=<nome bd>
+
+* Para usar o generate para scaffold do Rails, rode o comando...
+rails generate scaffold <Model> <campo:tipo> <campo:tipo> ...
+Exp.:
+rails generate scaffold User name:string
+
+* Para usar o generate para criação somente do Model do Rails, rode o comando...
+rails generate model <Model> <campo:tipo> <campo:tipo> ...
+obs: O nome do model é no singular mas a tabela no BD será criada no plural.: 
+rails g model Livro descricao:string
+rails generate model Product name:string description:text
+
+* Possiveis tipos de campos
+https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column
+
+* usando o generator do controller <nome do controller> <nome da acao separada por espaço>
+rails g controller welcome index
+
+* Comando para apagar um determinado controller ou scaffold completo
+rails d (ou rails destroy) controller <nome do controller>
+rails d (ou rails destroy) scaffold <nome_do_controller(PessoaFisica)>
+
+* listar os generates existentes
+rails g 
+
+* para conhecer todas as tasks disponíveis rode
+rails -T
+
+* Para filtrar tasks específicas use as iniciais do que procura, por exemplo:
+rails -T db
+
+* As tasks de banco de dados mais usadas são:
+rails db:create #cria o db
+rails db:drop #apaga o db
+rails db:migrate #executa as migrations
+rails db:rollback #desfaz a última migration
+
+* Permite acesso ao terminal 
+rails console <-e development>
+
+* Comando para criar uma Task <namespace> <nome da task>
+rails g task dev setup
+rails dev:setup
+
+* Criando uma migration "standalone"
+rails g migration AddMiningTypeToCoins mining_type:references
+Coins é o nome da tabela e nao o do model, por isso é no plural. O caso acima 
+cria um campo chave estrangeira mining_type_id na tabela Coins.
+outro exemplo:
+rails g migration AddZipCodToUserProfiles zip_code:string
+https://guides.rubyonrails.org/active_record_migrations.html#creating-a-migration
+
+* Relacionamentos belongs_to e has_many
+https://guides.rubyonrails.org/association_basics.html#the-belongs-to-association
+https://guides.rubyonrails.org/association_basics.html#the-has-many-association
+
+* Subir aplicaçao em ambientes diferentes
+rails s -e <production/test/development> ou
+RAILS_ENV=production rails s >> ou caso tenha problema com a chave 
+RAILS_ENV=production SECRET_KEY_BASE=production_test_key rails s
+
+* Preparar o bando em ambiente de produçao
+RAILS_ENV=production db:create db:migrate
+
+* Pre-compilar assets para ambiemte de produçao
+rails assets:precompile
+
+* Remove os assets pre-compilaos 
+rails assets:clobber
+
+* Validates para os models 
+https://guides.rubyonrails.org/active_record_validations.html#validation-helpers
+
+***** | RVM | *****
+* lista todas as versoes do ruby
+rvm list known
+* atualiza todas as versoes da lista
+rvm get head 
+* lista as versoes que estao instaladas local
+rvm list
+* instala a versao desejada
+rvm instal x.x.x 
+rvm instal x.x.x --default (instala e ja seta a versao como default)
+* usa a versao do ruby desejada
+rvm use x.x.x
+* usa a versao do ruby desejada e coloca como default
+rvm use x.x.x --default
+
+***** | GEM | *****
+* Instalar Gems
+gem install <nome da gem> -v <versao especifica x.x.x>
+* Gems instaladas localmente (perceba as versões)
+gem list
+* Pesquisa aproximada (localmente)
+gem list <nome da gem>
+* Pesquisa aproximada (remotamente)
+gem list <nome da gem> --remote
+* Pesquisa aproximada (remotamente para todas as versões)
+gem list <nome da gem> --remote --all
+* Remove uma gem
+gem uninstall <nome da gem>
+* Remove versões antigas da gem deixando somente a mais atual
+gem cleanup
+* Remove versões antigas de uma determinada gem
+gem cleanup <nome da gem>
+* Verifica versões que serão apagadas mas nao apaga
+gem cleanup -d
+
+***** | INSTALAÇÃO NODEJS E YARN | *****
+
+* Instalar o nodejs 
+sudo apt install nodejs
+  ou
+https://github.com/nodesource/distributions   
+
+# Using Ubuntu
+curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+
+* Instalar o yarn(gerenciador de pacotes do Nodejs)
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+em seguida, 
+sudo apt-get update && sudo apt-get install yarn
+
+https://classic.yarnpkg.com/pt-BR/docs/install#debian-stable
+
+* Começando novo projeto(Gera o arquivo package.json)
+yarn init
+
+***** | CREDENTIALS | *****
+Para abrir e editar o arquivo credentials rode o comando abaixo. Ao salvar o mesmo será criptografado e o acesso 
+se da pelo arquivo marter.key 
+
+EDITOR='code --wait' rails credentials:edit
+
+***** | PUBLICAR APP NO HEROKU | *****
+https://devcenter.heroku.com/articles/getting-started-with-rails5
+
+-heroku create
+- git config --list | grep heroku
+este comando espera esse resultado
+ remote.heroku.url=https://git.heroku.com/nameless-reaches-22146.git
+ remote.heroku.fetch=+refs/heads/*:refs/remotes/heroku/*
+- rails assets:precompile
+- git push heroku master
+
+* Mudar o nome da aplicaçao
+heroku apps:rename newname --app oldname
+
+gem 'ffi', '1.9.18'
+
+* Passo a passo para instalar rails(e suas dependencias) no linux
+https://onebitcode.com/rails-linux/
+
+***** | LINUX | *****
+
+* Atualiza lista de pacotes
+sudo apt-get update
+
+* Remove apenas os binários e dependências que não são mais utilizados, mas os arquivos de configuração permanecem.
+sudo apt-get install nome_do_pacote
+
+* Comando "apt-get purge": remove tudo, até os arquivos de configuração.
+sudo apt-get purge nome_do_programa
+
+* Instalação do Dbivier
+sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo apt-get update
+sudo apt-get install dbeaver-ce 
+
+* Instala dependencias de um dpkg
+sudo apt-get install -f
+
+* Sobre serviços no linux(start, status, stop)
+
+sudo systemctl stop <nome do app>.service
+sudo systemctl status elasticsearch.service
+sudo systemctl status postgresql.service
+
+
+
